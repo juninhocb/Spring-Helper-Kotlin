@@ -3,7 +3,6 @@ package com.example.carlosjr.simplemvcrestrelationship.bootstrap
 import com.example.carlosjr.simplemvcrestrelationship.entities.Student
 import com.example.carlosjr.simplemvcrestrelationship.entities.Subject
 import com.example.carlosjr.simplemvcrestrelationship.entities.Teacher
-import com.example.carlosjr.simplemvcrestrelationship.mappers.TeacherMapper
 import com.example.carlosjr.simplemvcrestrelationship.repositories.StudentRepository
 import com.example.carlosjr.simplemvcrestrelationship.repositories.SubjectRepository
 import com.example.carlosjr.simplemvcrestrelationship.repositories.TeacherRepository
@@ -13,8 +12,7 @@ import org.springframework.stereotype.Component
 @Component
 class InitData(private val teacherRepository: TeacherRepository,
                private val studentRepository: StudentRepository,
-               private val subjectRepository: SubjectRepository,
-               private val teacherMapper: TeacherMapper ) : CommandLineRunner{
+               private val subjectRepository: SubjectRepository) : CommandLineRunner{
     override fun run(vararg args: String?) {
 
         val tea = Teacher("John Green", 15)
@@ -22,9 +20,9 @@ class InitData(private val teacherRepository: TeacherRepository,
         val sub = Subject("Physics")
 
         teacherRepository.save(tea)
+        val persistedSubject =  subjectRepository.save(sub)
+        stu.subject = persistedSubject
         studentRepository.save(stu)
-        subjectRepository.save(sub)
-
 
     }
 }
