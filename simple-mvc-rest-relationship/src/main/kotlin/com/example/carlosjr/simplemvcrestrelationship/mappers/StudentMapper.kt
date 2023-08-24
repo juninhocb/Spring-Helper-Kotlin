@@ -5,12 +5,13 @@ import com.example.carlosjr.simplemvcrestrelationship.entities.Student
 import org.springframework.stereotype.Component
 
 @Component
-class StudentMapper {
+class StudentMapper(private val subjectMapper: SubjectMapper) {
 
-    fun dtoToEntity(studentDto: StudentDto) : Student{
+    fun dtoToEntity(studentDto: StudentDto) : Student {
         return Student(
             name = studentDto.name,
-            averageNotice = studentDto.averageNotice
+            averageNotice = studentDto.averageNotice,
+            subject = subjectMapper.dtoToEntity(studentDto.subjectDto)
         )
     }
 
@@ -19,7 +20,8 @@ class StudentMapper {
             id = student.id,
             createdTime =  student.createdTime,
             name = student.name,
-            averageNotice = student.averageNotice
+            averageNotice = student.averageNotice,
+            subjectDto = subjectMapper.entityToDto(student.subject)
         )
     }
 

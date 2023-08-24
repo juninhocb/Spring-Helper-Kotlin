@@ -10,7 +10,8 @@ data class StudentDto (
     @Null val id: Long? = null,
     @Null @JsonProperty("created_time") val createdTime: LocalDateTime? = null,
     @NotBlank var name: String,
-    @NotNull  @JsonProperty("average_notice") var averageNotice: Int
+    @NotNull  @JsonProperty("average_notice") var averageNotice: Int,
+    @JsonProperty("subject") var subjectDto: SubjectDto? = null
 ) {
-    constructor() : this(null, null, "", 0)
+    constructor() : this(null, null, "", 0, null)
 }
