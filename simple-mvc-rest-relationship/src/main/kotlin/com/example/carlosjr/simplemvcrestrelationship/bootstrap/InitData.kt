@@ -19,10 +19,11 @@ class InitData(private val teacherRepository: TeacherRepository,
         val stu = Student("James Red", 5)
         val sub = Subject("Physics")
 
-        teacherRepository.save(tea)
         val persistedSubject =  subjectRepository.save(sub)
         stu.subject = persistedSubject
         studentRepository.save(stu)
+        tea.subject = persistedSubject
+        teacherRepository.save(tea)
 
     }
 }

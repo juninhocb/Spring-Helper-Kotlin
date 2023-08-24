@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
-class TeacherMapper {
+class TeacherMapper(private val subjectMapper: SubjectMapper) {
 
     fun toTeacherDto(teacher: Teacher): TeacherDto {
 
@@ -14,14 +14,16 @@ class TeacherMapper {
             id = teacher.id,
             createdDate = LocalDateTime.from(teacher.createdTime),
             name = teacher.name,
-            careerExperience = teacher.careerExperience
+            careerExperience = teacher.careerExperience,
+            subjectDto = subjectMapper.entityToDto(teacher.subject)
         )
     }
 
     fun toTeacherEntity(teacherDto: TeacherDto) : Teacher {
         return Teacher(
             name = teacherDto.name,
-            careerExperience =  teacherDto.careerExperience
+            careerExperience =  teacherDto.careerExperience,
+            subject = subjectMapper.dtoToEntity(teacherDto.subjectDto)
         )
     }
 
