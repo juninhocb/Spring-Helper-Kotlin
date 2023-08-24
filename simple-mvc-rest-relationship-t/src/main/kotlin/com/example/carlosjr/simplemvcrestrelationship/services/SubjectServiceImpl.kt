@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class SubjectServiceImpl(private val subjectRepository: SubjectRepository,
-                         private val subjectMapper: SubjectMapper) : SubjectService {
+                         private val subjectMapper: SubjectMapper) : GenericService<SubjectDto> {
 
-    override fun getSubjectById(id: Long): SubjectDto {
+    override fun getById(id: Long): SubjectDto {
         val subjectOpt =  subjectRepository.findById(id)
 
         if (subjectOpt.isEmpty){
@@ -20,7 +20,7 @@ class SubjectServiceImpl(private val subjectRepository: SubjectRepository,
         return subjectMapper.entityToDto(subjectOpt.get())!!
     }
 
-    override fun getSubjectByName(name: String): SubjectDto {
+    override fun getByName(name: String): SubjectDto {
         val subjectOpt =  subjectRepository.findByName(name)
 
         if (subjectOpt.isEmpty){
@@ -30,7 +30,7 @@ class SubjectServiceImpl(private val subjectRepository: SubjectRepository,
         return subjectMapper.entityToDto(subjectOpt.get())!!
     }
 
-    override fun createSubject(subjectDto: SubjectDto): Long {
+    override fun create(subjectDto: SubjectDto): Long {
         val persistedSubject = subjectRepository
             .save(subjectMapper.dtoToEntity(subjectDto)!!)
 

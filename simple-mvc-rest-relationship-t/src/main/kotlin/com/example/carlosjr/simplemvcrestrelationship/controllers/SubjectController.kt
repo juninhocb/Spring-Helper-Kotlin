@@ -1,7 +1,7 @@
 package com.example.carlosjr.simplemvcrestrelationship.controllers
 
 import com.example.carlosjr.simplemvcrestrelationship.dtos.SubjectDto
-import com.example.carlosjr.simplemvcrestrelationship.services.SubjectService
+import com.example.carlosjr.simplemvcrestrelationship.services.GenericService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -10,16 +10,16 @@ import java.net.URI
 
 @RestController
 @RequestMapping("/api/v1/subjects")
-class SubjectController(private val subjectService: SubjectService) {
+class SubjectController(private val subjectService: GenericService<SubjectDto>) {
 
     @GetMapping("/{subjectId}")
     fun getSubjectById(@PathVariable subjectId: Long) : ResponseEntity<SubjectDto> {
-        return ResponseEntity.ok().body(subjectService.getSubjectById(subjectId))
+        return ResponseEntity.ok().body(subjectService.getById(subjectId))
     }
 
     @GetMapping("/find")
     fun getSubjectByName(@RequestParam(name = "name") name: String) : ResponseEntity<SubjectDto> {
-        return ResponseEntity.ok().body(subjectService.getSubjectByName(name))
+        return ResponseEntity.ok().body(subjectService.getByName(name))
     }
 
     @PostMapping
@@ -27,7 +27,7 @@ class SubjectController(private val subjectService: SubjectService) {
                       ucb: UriComponentsBuilder
     ) : ResponseEntity<Void> {
 
-        val resourceId = subjectService.createSubject(subjectDto)
+        val resourceId = subjectService.create(subjectDto)
 
         val resourceLocation : URI = ucb
             .path("/api/v1/subjects/{id}")

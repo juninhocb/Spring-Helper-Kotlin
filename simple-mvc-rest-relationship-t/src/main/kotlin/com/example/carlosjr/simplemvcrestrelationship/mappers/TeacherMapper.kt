@@ -2,28 +2,29 @@ package com.example.carlosjr.simplemvcrestrelationship.mappers
 
 import com.example.carlosjr.simplemvcrestrelationship.dtos.TeacherDto
 import com.example.carlosjr.simplemvcrestrelationship.entities.Teacher
+import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
-class TeacherMapper(private val subjectMapper: SubjectMapper) {
+@Primary
+class TeacherMapper(private val subjectMapper: SubjectMapper) : GenericMapper<TeacherDto, Teacher> {
 
-    fun toTeacherDto(teacher: Teacher): TeacherDto {
-
-        return TeacherDto(
-            id = teacher.id,
-            createdDate = LocalDateTime.from(teacher.createdTime),
-            name = teacher.name,
-            careerExperience = teacher.careerExperience,
-            subjectDto = subjectMapper.entityToDto(teacher.subject)
+    override fun dtoToEntity(dto: TeacherDto): Teacher {
+        return Teacher(
+            name = dto.name,
+            careerExperience =  dto.careerExperience,
+            subject = subjectMapper.dtoToEntity(dto.subjectDto)
         )
     }
 
-    fun toTeacherEntity(teacherDto: TeacherDto) : Teacher {
-        return Teacher(
-            name = teacherDto.name,
-            careerExperience =  teacherDto.careerExperience,
-            subject = subjectMapper.dtoToEntity(teacherDto.subjectDto)
+    override fun entityToDto(entity: Teacher): TeacherDto {
+        return TeacherDto(
+            id = entity.id,
+            createdDate = LocalDateTime.from(entity.createdTime),
+            name = entity.name,
+            careerExperience = entity.careerExperience,
+            subjectDto = subjectMapper.entityToDto(entity.subject)
         )
     }
 

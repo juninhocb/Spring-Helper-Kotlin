@@ -1,11 +1,10 @@
 package com.example.carlosjr.simplemvcrestrelationship.repositories
 
 import com.example.carlosjr.simplemvcrestrelationship.entities.Teacher
-import org.springframework.data.jpa.repository.JpaRepository
-import java.util.*
+import org.springframework.stereotype.Repository
 
-interface TeacherRepository : JpaRepository<Teacher, Long> {
+@Repository
+interface TeacherRepository : GenericRepository<Teacher> {
 
-    fun findByName(name: String) : Optional<Teacher>
 
 }
