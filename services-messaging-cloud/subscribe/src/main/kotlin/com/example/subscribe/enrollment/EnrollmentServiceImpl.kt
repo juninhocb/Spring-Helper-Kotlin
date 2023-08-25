@@ -2,12 +2,14 @@ package com.example.subscribe.enrollment
 
 import com.example.common.dto.EnrollmentDto
 import com.example.common.exceptions.ResourceNotFoundException
+import com.example.subscribe.championship.ChampionshipService
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class EnrollmentServiceImpl(private val repository: EnrollmentRepository,
-                            private val mapper: EnrollmentMapper) : EnrollmentService {
+                            private val mapper: EnrollmentMapper,
+                            private val championshipService: ChampionshipService) : EnrollmentService {
 
     override fun verifyTeamEnrollment(enrollmentDto: EnrollmentDto): Boolean {
 
@@ -24,9 +26,16 @@ class EnrollmentServiceImpl(private val repository: EnrollmentRepository,
 
     override fun create(enrollmentDto: EnrollmentDto): UUID {
 
-        enrollmentDto.isActive = true
+        val persistedChampionship = championshipService
+            .getEntityByName(enrollmentDto.championship.name)
 
-        val persistedResource = repository.save(mapper.dtoToEntity(enrollmentDto))
+        val enrollToSave = mapper.dtoToEntity(enrollmentDto)
+
+        enrollToSave.isActive = true
+
+        enrollToSave.championship = persistedChampionship
+
+        val persistedResource = repository.save(enrollToSave)
 
         return persistedResource.id!!
 

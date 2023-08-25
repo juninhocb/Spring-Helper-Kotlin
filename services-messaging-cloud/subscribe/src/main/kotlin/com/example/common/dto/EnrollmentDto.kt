@@ -1,6 +1,6 @@
 package com.example.common.dto
 
-import com.example.subscribe.championship.Championship
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -11,9 +11,11 @@ import java.util.*
 data class EnrollmentDto(
     @field:Null val id: UUID? = null,
     @field:NotBlank @JsonProperty(value = "team") var teamName: String,
-    @field:NotNull var championship: Championship,
-    @field:Null @JsonProperty(value = "is_active") var isActive: Boolean,
-    @field:Null @JsonProperty(value = "created_at") val createdAt: LocalDateTime? = null
+    @field:NotNull var championship: ChampionshipDto,
+    @JsonProperty(value = "is_active") var isActive: Boolean,
+    @field:Null
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =  "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone =  "GMT")
+    @JsonProperty(value = "created_at") val createdAt: LocalDateTime? = null
 ) {
-    constructor() : this(null, "", Championship(), false, null)
+    constructor() : this(null, "", ChampionshipDto(), false, null)
 }

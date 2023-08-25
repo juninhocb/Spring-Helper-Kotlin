@@ -1,5 +1,6 @@
 package com.example.common.dto
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Null
@@ -9,7 +10,10 @@ import java.util.*
 data class ChampionshipDto (
     @field:Null val id: UUID? = null,
     @field:NotBlank var name: String,
-    @field:Null @JsonProperty(value = "created_at") val createdAt: LocalDateTime? = null
+    @field:Null
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =  "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone =  "GMT")
+    @JsonProperty(value = "created_at")
+    val createdAt: LocalDateTime? = null
 ) {
     constructor() : this(null, "", null)
 }

@@ -1,16 +1,17 @@
 package com.example.subscribe.enrollment
 
 import com.example.common.dto.EnrollmentDto
+import com.example.subscribe.championship.ChampionshipMapper
 import org.springframework.stereotype.Component
 
 @Component
-class EnrollmentMapper (){
+class EnrollmentMapper (private val championshipMapper: ChampionshipMapper){
 
     fun dtoToEntity(dto: EnrollmentDto) : Enrollment{
 
         return Enrollment(
             teamName = dto.teamName,
-            championship = dto.championship,
+            championship = championshipMapper.dtoToEntity(dto.championship),
             isActive = dto.isActive
         )
     }
@@ -20,7 +21,7 @@ class EnrollmentMapper (){
         return EnrollmentDto(
             id = entity.id,
             teamName = entity.teamName,
-            championship = entity.championship,
+            championship = championshipMapper.entityToDto(entity.championship),
             isActive = entity.isActive,
             createdAt = entity.createdAt
         )

@@ -21,6 +21,17 @@ class ChampionshipServiceImpl(private val repository: ChampionshipRepository,
         return mapper.entityToDto(championshipOpt.get())
     }
 
+    override fun getEntityByName(name: String): Championship {
+
+        val championshipOpt = repository.findByName(name)
+
+        if (championshipOpt.isEmpty){
+            throw ResourceNotFoundException(name)
+        }
+
+        return championshipOpt.get()
+    }
+
     override fun getById(uuid: UUID): ChampionshipDto {
 
         val championshipOpt = repository.findById(uuid)
