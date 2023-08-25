@@ -3,7 +3,6 @@ package com.example.carlosjr.simplemvcrestrelationship.controllers
 import com.example.carlosjr.simplemvcrestrelationship.dtos.StudentDto
 import com.example.carlosjr.simplemvcrestrelationship.services.GenericService
 import jakarta.validation.Valid
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
@@ -27,11 +26,11 @@ class StudentController(private val studentService: GenericService<StudentDto>) 
     fun createStudent(@RequestBody @Valid studentDto: StudentDto,
                       ucb: UriComponentsBuilder) : ResponseEntity<Void> {
 
-        val resourceId = studentService.create(studentDto)
+        val persistedResource = studentService.create(studentDto)
 
         val resourceLocation : URI = ucb
             .path("/api/v1/students/{id}")
-            .buildAndExpand(resourceId).toUri()
+            .buildAndExpand(persistedResource.id).toUri()
 
         return ResponseEntity.created(resourceLocation).build()
 

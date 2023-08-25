@@ -5,28 +5,30 @@ import com.example.carlosjr.simplemvcrestrelationship.entities.Subject
 import org.springframework.stereotype.Component
 
 @Component
-class SubjectMapper {
+class SubjectMapper : GenericMapper<SubjectDto, Subject>{
 
-    fun dtoToEntity(subjectDto: SubjectDto?) : Subject?{
-        if (subjectDto != null) {
+    override fun dtoToEntity(dto: SubjectDto?) : Subject?{
+        if (dto != null) {
             return Subject(
-                id = subjectDto.id,
-                createdTime = subjectDto.createdTime,
-                name = subjectDto.name
+                id = dto.id,
+                createdTime = dto.createdTime,
+                name = dto.name
             )
         }
         return null
     }
 
-    fun entityToDto(subject: Subject?) : SubjectDto? {
-        if (subject != null) {
+    override fun entityToDto(entity: Subject?) : SubjectDto? {
+        if (entity != null) {
             return SubjectDto(
-                id = subject.id,
-                createdTime = subject.createdTime,
-                name = subject.name
+                id = entity.id,
+                createdTime = entity.createdTime,
+                name = entity.name
             )
         }
         return null
     }
+
+
 
 }

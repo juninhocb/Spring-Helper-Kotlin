@@ -13,6 +13,6 @@ class TeacherServiceImpl(private val teacherRepository: TeacherRepository,
     fun greetingsForTeacher() : String{
         val testEntity =  teacherRepository.findById(1L)
 
-        return "Hello Teacher ${teacherMapper.entityToDto(testEntity.get()).name}. This is the greetings!"
+        return "Hello Teacher ${teacherMapper.entityToDto(testEntity.get())?.name}. This is the greetings!"
     }
 }

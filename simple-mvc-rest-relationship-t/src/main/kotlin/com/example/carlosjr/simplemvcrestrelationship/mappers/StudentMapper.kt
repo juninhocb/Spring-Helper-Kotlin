@@ -5,24 +5,30 @@ import com.example.carlosjr.simplemvcrestrelationship.entities.Student
 import org.springframework.stereotype.Component
 
 @Component
-class StudentMapper(private val subjectMapper: SubjectMapper) {
+class StudentMapper(private val subjectMapper: SubjectMapper) : GenericMapper<StudentDto, Student> {
 
-    fun dtoToEntity(studentDto: StudentDto) : Student {
-        return Student(
-            name = studentDto.name,
-            averageNotice = studentDto.averageNotice,
-            subject = subjectMapper.dtoToEntity(studentDto.subjectDto)
-        )
+    override fun dtoToEntity(dto: StudentDto?) : Student? {
+        if (dto != null) {
+            return Student(
+                name = dto.name,
+                averageNotice = dto.averageNotice,
+                subject = subjectMapper.dtoToEntity(dto.subjectDto)
+            )
+        }
+        return null
     }
 
-    fun entityToDto(student: Student) : StudentDto {
-        return StudentDto(
-            id = student.id,
-            createdTime =  student.createdTime,
-            name = student.name,
-            averageNotice = student.averageNotice,
-            subjectDto = subjectMapper.entityToDto(student.subject)
-        )
+    override fun entityToDto(entity: Student?) : StudentDto? {
+        if (entity != null) {
+            return StudentDto(
+                id = entity.id,
+                createdTime =  entity.createdTime,
+                name = entity.name,
+                averageNotice = entity.averageNotice,
+                subjectDto = subjectMapper.entityToDto(entity.subject)
+            )
+        }
+        return null
     }
 
 }

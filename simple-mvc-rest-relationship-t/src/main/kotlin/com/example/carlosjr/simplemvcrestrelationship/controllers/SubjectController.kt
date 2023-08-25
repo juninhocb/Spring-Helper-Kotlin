@@ -27,11 +27,11 @@ class SubjectController(private val subjectService: GenericService<SubjectDto>) 
                       ucb: UriComponentsBuilder
     ) : ResponseEntity<Void> {
 
-        val resourceId = subjectService.create(subjectDto)
+        val persistedResource = subjectService.create(subjectDto)
 
         val resourceLocation : URI = ucb
             .path("/api/v1/subjects/{id}")
-            .buildAndExpand(resourceId).toUri()
+            .buildAndExpand(persistedResource.id).toUri()
 
         return ResponseEntity.created(resourceLocation).build()
 

@@ -28,11 +28,11 @@ class TeacherController(private val teacherService: TeacherServiceImpl) {
                       ucb: UriComponentsBuilder
     ) : ResponseEntity<Void> {
 
-        val resourceId = teacherService.create(teacherDto)
+        val persistedResource = teacherService.create(teacherDto)
 
         val resourceLocation : URI = ucb
             .path("/api/v1/teachers/{id}")
-            .buildAndExpand(resourceId).toUri()
+            .buildAndExpand(persistedResource.id).toUri()
 
         return ResponseEntity.created(resourceLocation).build()
 

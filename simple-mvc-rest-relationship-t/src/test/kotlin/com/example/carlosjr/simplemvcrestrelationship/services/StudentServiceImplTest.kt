@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class StudentServiceImplTest(@Autowired val subjectRepository: SubjectRepository,
-                             @Autowired val studentService: StudentService,
+                             @Autowired val studentService: GenericService<StudentDto>,
                              @Autowired val subjectMapper: SubjectMapper   ) {
 
     @Test
@@ -23,11 +23,11 @@ class StudentServiceImplTest(@Autowired val subjectRepository: SubjectRepository
             null, null, "Peter Black", 6, subjectDto
         )
 
-        val resourceId = studentService.createStudent(studentDto)
+        val resourceId = studentService.create(studentDto)
 
         assertThat(resourceId).isNotNull()
 
-        val persistedStudent = studentService.getStudentByName("Peter Black")
+        val persistedStudent = studentService.getByName("Peter Black")
 
         assertThat(persistedStudent).isNotNull()
 

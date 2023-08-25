@@ -14,7 +14,7 @@ open class GenericServiceImpl<T,V : Any>(private val repository: GenericReposito
         if (objOpt.isEmpty){
             throw ResourceNotFoundException(id.toString())
         }
-        return mapper.entityToDto(objOpt.get())
+        return mapper.entityToDto(objOpt.get())!!
 
     }
 
@@ -26,10 +26,10 @@ open class GenericServiceImpl<T,V : Any>(private val repository: GenericReposito
             throw ResourceNotFoundException(name)
         }
 
-        return mapper.entityToDto(objOpt.get())
+        return mapper.entityToDto(objOpt.get())!!
     }
 
     override fun create(objectDto: T): T {
-        return  mapper.entityToDto(repository.save(mapper.dtoToEntity(objectDto)))
+        return  mapper.entityToDto(repository.save(mapper.dtoToEntity(objectDto)!!))!!
     }
 }

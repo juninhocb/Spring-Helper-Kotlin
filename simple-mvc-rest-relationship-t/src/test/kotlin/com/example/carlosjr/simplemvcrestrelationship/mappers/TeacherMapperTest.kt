@@ -12,7 +12,7 @@ class TeacherMapperTest(@Autowired val teacherMapper: TeacherMapper) {
     @Test
     fun testMap(){
         val tea = Teacher("John Green", 15)
-        teacherMapper.toTeacherDto(tea)
+        teacherMapper.entityToDto(tea)
     }
 
     @Test
@@ -20,6 +20,6 @@ class TeacherMapperTest(@Autowired val teacherMapper: TeacherMapper) {
         val dto = TeacherDto()
         dto.name = "Alex Red"
         dto.careerExperience = 15
-        println(teacherMapper.toTeacherEntity(dto))
+        println(teacherMapper.dtoToEntity(dto))
     }
 }
