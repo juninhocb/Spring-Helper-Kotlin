@@ -1,4 +1,4 @@
-package com.example.subscribe.championship
+package com.example.games.game
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -12,18 +12,18 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Entity
-data class Championship(
+data class Game(
+
     @Id
     @GeneratedValue
     @GenericGenerator(name = "UUID")
     @JdbcTypeCode(SqlTypes.CHAR)
     @Column(length = 36, columnDefinition = "VARCHAR(36)")
     val id: UUID? = null,
-    @Column(unique = true, columnDefinition = "VARCHAR(36)")
-    var name: String,
     @CreationTimestamp
     @Column(name = "created_at")
     val createdAt: LocalDateTime? = null
-) {
-    constructor() : this(null, "", null)
-}
+
+
+
+)
