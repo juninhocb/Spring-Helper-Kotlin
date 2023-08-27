@@ -1,9 +1,6 @@
 package com.example.games.game
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.JdbcTypeCode
@@ -22,8 +19,13 @@ data class Game(
     val id: UUID? = null,
     @CreationTimestamp
     @Column(name = "created_at")
-    val createdAt: LocalDateTime? = null
-
-
-
-)
+    val createdAt: LocalDateTime? = null,
+    var team: String ,
+    var adversary: String,
+    var result: GameResult,
+    var championship: String,
+    @Enumerated(EnumType.STRING)
+    var status: GameStateProcess? = null
+) {
+    constructor() : this(null, null, "", "", GameResult.DRAW, "",GameStateProcess.INIT_PROCESS)
+}
