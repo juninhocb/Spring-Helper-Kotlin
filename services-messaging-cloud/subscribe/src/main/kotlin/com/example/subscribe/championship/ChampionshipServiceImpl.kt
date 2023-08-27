@@ -32,6 +32,10 @@ class ChampionshipServiceImpl(private val repository: ChampionshipRepository,
         return championshipOpt.get()
     }
 
+    override fun getAll(): Set<ChampionshipDto> {
+        return repository.findAll().map { mapper.entityToDto(it) }.toSet()
+    }
+
     override fun getById(uuid: UUID): ChampionshipDto {
 
         val championshipOpt = repository.findById(uuid)

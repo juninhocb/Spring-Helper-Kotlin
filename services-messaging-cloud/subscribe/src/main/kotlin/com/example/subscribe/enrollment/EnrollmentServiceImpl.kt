@@ -69,4 +69,11 @@ class EnrollmentServiceImpl(private val repository: EnrollmentRepository,
 
         return mapper.entityToDto(enrollmentOpt.get())
     }
+
+    override fun findAll(): Set<EnrollmentDto> {
+        return repository
+            .findAll()
+            .map { mapper.entityToDto( it )}
+            .toSet()
+    }
 }

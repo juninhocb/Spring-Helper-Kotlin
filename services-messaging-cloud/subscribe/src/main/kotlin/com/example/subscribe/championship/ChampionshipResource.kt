@@ -11,6 +11,7 @@ import java.util.*
 @RequestMapping("/api/v1/subscribe/championship")
 class ChampionshipResource(private val service: ChampionshipService) {
 
+
     @GetMapping("/{championshipId}")
     fun getById(@PathVariable championshipId: UUID) : ResponseEntity<ChampionshipDto> {
         return ResponseEntity.ok().body(service.getById(championshipId))
@@ -19,6 +20,12 @@ class ChampionshipResource(private val service: ChampionshipService) {
     @GetMapping("/find")
     fun getByName(@RequestParam(name = "name") name: String) : ResponseEntity<ChampionshipDto> {
         return ResponseEntity.ok().body(service.getByName(name))
+    }
+
+    @GetMapping
+    fun getAll() : ResponseEntity<Set<ChampionshipDto>> {
+        println("Fetching data")
+        return ResponseEntity.ok().body(service.getAll())
     }
 
     @PostMapping

@@ -54,6 +54,11 @@ class EnrollmentResource(private val service: EnrollmentService) {
 
     }
 
+    @GetMapping
+    fun getAll() : ResponseEntity<Set<EnrollmentDto>> {
+        return ResponseEntity.ok().body(service.findAll())
+    }
+
 
 
 }

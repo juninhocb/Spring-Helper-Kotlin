@@ -15,4 +15,6 @@ interface EnrollmentService {
 
     fun getByTeamName(teamName: String) : EnrollmentDto
 
+    fun findAll() : Set<EnrollmentDto>
+
 }

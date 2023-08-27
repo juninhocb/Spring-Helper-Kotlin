@@ -17,7 +17,7 @@ data class Enrollment (
     @JdbcTypeCode(SqlTypes.CHAR)
     @Column(length = 36, columnDefinition = "VARCHAR(36)")
     val id: UUID? = null,
-    @Column(name = "team_name", unique = true)
+    @Column(name = "team_name")
     var teamName: String,
     @ManyToOne
     @JoinColumn(name = "championship", referencedColumnName = "name", columnDefinition = "VARCHAR(36)")
