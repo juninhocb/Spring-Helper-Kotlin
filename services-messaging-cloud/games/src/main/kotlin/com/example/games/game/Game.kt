@@ -22,10 +22,11 @@ data class Game(
     val createdAt: LocalDateTime? = null,
     var team: String ,
     var adversary: String,
+    @Enumerated(EnumType.STRING)
     var result: GameResult,
     var championship: String,
     @Enumerated(EnumType.STRING)
-    var status: GameStateProcess? = null
+    var status: GameStateProcess
 ) {
     constructor() : this(null, null, "", "", GameResult.DRAW, "",GameStateProcess.INIT_PROCESS)
 }

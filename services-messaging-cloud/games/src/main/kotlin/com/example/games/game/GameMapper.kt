@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component
 class GameMapper {
 
     fun dtoToEntity(gameDto: GameDto) : Game{
-
         return Game(
             team = gameDto.team,
             championship = gameDto.championship,
             adversary = gameDto.adversary,
-            result = GameResult.getGameResult(gameDto.result)
+            result = GameResult.getGameResult(gameDto.result),
+            status = GameStateProcess.getValue(gameDto.status.toString())
         )
 
     }
