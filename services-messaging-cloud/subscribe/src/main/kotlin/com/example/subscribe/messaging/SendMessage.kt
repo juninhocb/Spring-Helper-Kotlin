@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component
 class SendMessage (private val rabbitTemplate: RabbitTemplate) {
 
     fun exchangeMessage(subscribeResponseDto: SubscribeResponseDto){
-
-        rabbitTemplate.convertAndSend(subscribeResponseDto)
+        Thread.sleep(1000)
+        println("[3] Sending to games on subscribe queue ${subscribeResponseDto.validatedGameDto?.team}")
+        rabbitTemplate.convertAndSend("subscribe-exchange", "foo.bar.sla", subscribeResponseDto)
     }
 }

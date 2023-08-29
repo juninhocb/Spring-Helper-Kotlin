@@ -15,7 +15,11 @@ class GameMessagingQueueHandler(private val service: EnrollmentService,
 
     fun messageProcessor(gameProcessDto: GameProcessDto) {
 
+        Thread.sleep(1000)
+
         val response =  SubscribeResponseDto(gameProcessDto.id)
+
+        println("[2] Message received ${gameProcessDto.gameDto.team} ")
 
         try {
 
@@ -31,18 +35,20 @@ class GameMessagingQueueHandler(private val service: EnrollmentService,
 
             if (isVerified) {
 
+                println("[2] Verify approved")
                 response.approved = true
                 response.error = false
                 response.validatedGameDto = gameProcessDto.gameDto
 
             } else {
-
-                response.approved = true
+                println("[2] Verify not approved")
+                response.approved = false
                 response.error = false
                 response.validatedGameDto = gameProcessDto.gameDto
             }
 
         }  catch (ex: Exception){
+            println("[2] Problem ${ex.message}")
             response.approved = false
             response.error = true
         }

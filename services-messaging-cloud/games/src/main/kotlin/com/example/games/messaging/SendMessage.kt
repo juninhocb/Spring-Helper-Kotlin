@@ -11,7 +11,7 @@ class SendMessage(private val rabbitTemplate: RabbitTemplate) {
 
     fun sendMessageToBroker(gameDto: GameDto) {
 
-        println("Sending message...")
+        println("[1] Sending message ${gameDto.team}")
 
         val gameProcessor = GameProcessDto(
             UUID.randomUUID(),

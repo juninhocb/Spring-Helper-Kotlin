@@ -10,6 +10,10 @@ class MessageHandler(private val service: GameService) {
 
     fun messageHandler(subscribeResponseDto: SubscribeResponseDto){
 
+        Thread.sleep(1000)
+
+        println("[4] Message received ${subscribeResponseDto.validatedGameDto?.team}")
+
         //change to update after state machine impl
         if (subscribeResponseDto.approved){
             subscribeResponseDto.validatedGameDto?.status = GameStateProcess.SUCCESSFUL.name
