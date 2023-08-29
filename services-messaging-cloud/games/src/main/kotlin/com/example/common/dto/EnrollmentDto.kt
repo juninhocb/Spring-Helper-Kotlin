@@ -18,4 +18,6 @@ data class EnrollmentDto(
     @JsonProperty(value = "created_at") val createdAt: LocalDateTime? = null
 ) {
     constructor() : this(null, "", ChampionshipDto(), false, null)
+    constructor(teamName: String, championship: ChampionshipDto)
+        : this(null, teamName, championship, true, null)
 }
