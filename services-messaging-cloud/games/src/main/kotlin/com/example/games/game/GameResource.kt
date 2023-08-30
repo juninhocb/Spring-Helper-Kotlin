@@ -29,23 +29,6 @@ class GameResource(private val service: GameService,
         return ResponseEntity.ok().body(service.getAllByTeam(team))
     }
 
-
-    //sync approach
-    /*@PostMapping
-    fun createGame(@RequestBody @Valid gameDto: GameDto,
-                   ucb: UriComponentsBuilder) : ResponseEntity<Void> {
-
-        val persistedId = service.create(gameDto)
-
-        val resourcePath: URI =
-            ucb
-                .path("/api/v1/games/game/{id}")
-                .buildAndExpand(persistedId)
-                .toUri()
-
-        return ResponseEntity.created(resourcePath).build()
-    }*/
-
     @PostMapping
     fun createGame(@RequestBody @Valid gameDto: GameDto) : ResponseEntity<Void>{
         gameDto.status = GameStateProcess.PROCESSING.name
