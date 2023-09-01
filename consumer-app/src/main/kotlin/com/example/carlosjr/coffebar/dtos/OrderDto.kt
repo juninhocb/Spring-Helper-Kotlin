@@ -9,7 +9,8 @@ data class OrderDto(
     val attendantId: UUID,
     @JsonProperty("chef_id")
     var chefId : UUID? = null,
-    var amount: BigDecimal
+    var amount: BigDecimal,
+    var state: String? = null
 ) {
-    constructor() : this(UUID.randomUUID(), null, BigDecimal(0.0))
+    constructor() : this(UUID.randomUUID(), null, BigDecimal(0.0), null)
 }

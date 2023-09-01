@@ -17,6 +17,7 @@ class OrderMapper(private val chefRepository: ChefRepository) {
         }
 
         return Order(
+            state = OrderState.getState(dto.state.toString()),
             attendantId = dto.attendantId,
             chef = persistedChef.get(),
             amount = dto.amount
@@ -26,6 +27,7 @@ class OrderMapper(private val chefRepository: ChefRepository) {
     fun entityToDto(entity: Order) : OrderDto{
 
         return OrderDto(
+            state = entity.state.toString(),
             attendantId = entity.attendantId,
             chefId = entity.chef.id,
             amount = entity.amount

@@ -11,7 +11,7 @@ class OrderHandler(private val service: OrderService) {
 
         println("Message received $orderDto")
 
-        service.saveOrder(orderDto)
+        service.handleOrderProcess(orderDto)
     }
 
 }

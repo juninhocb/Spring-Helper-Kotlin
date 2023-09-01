@@ -29,7 +29,13 @@ data class Order(
     @ManyToOne
     @JoinColumn(name = "chef_id", referencedColumnName = "id", columnDefinition = "VARCHAR(36)")
     var chef: Chef,
-    var amount: BigDecimal
+    var amount: BigDecimal,
+    @Enumerated(EnumType.STRING)
+    var result: OrderResult? = null,
+    @Enumerated(EnumType.STRING)
+    var state: OrderState
+
 ) {
-    constructor() : this(null, null, null, UUID.randomUUID(), Chef(), BigDecimal(0.0))
+    constructor() :
+            this(null, null, null, UUID.randomUUID(), Chef(), BigDecimal(0.0), null, OrderState.INIT_PROCESS)
 }
