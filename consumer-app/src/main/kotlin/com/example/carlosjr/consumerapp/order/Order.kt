@@ -25,6 +25,7 @@ data class Order(
     @Column(name = "finished_at")
     var finishedAt: LocalDateTime? = null,
     @Column(name = "attendant_id", columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     var attendantId: UUID,
     @ManyToOne
     @JoinColumn(name = "chef_id", referencedColumnName = "id", columnDefinition = "VARCHAR(36)")

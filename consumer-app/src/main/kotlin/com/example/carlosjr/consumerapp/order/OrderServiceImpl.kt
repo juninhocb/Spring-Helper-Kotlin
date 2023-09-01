@@ -6,8 +6,6 @@ import org.springframework.messaging.support.MessageBuilder
 import org.springframework.statemachine.StateMachine
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
-import reactor.core.scheduler.Schedulers
-import java.time.LocalDateTime
 
 @Service
 class OrderServiceImpl(
@@ -23,27 +21,18 @@ class OrderServiceImpl(
 
         repository.save(persistOrder)
 
+        stateMachine.start()
+
         val event: Message<OrderEvents> = MessageBuilder.withPayload(OrderEvents.ON_PROCESSING).build()
 
-        stateMachine.sendEvent(Mono.just(event))
-            .publishOn(Schedulers.boundedElastic())
-            .doOnComplete {
-                repository.save(persistOrder)
-            }
-            .subscribe()
+        stateMachine.sendEvent(Mono.just(event)).subscribe()
 
-        val result: OrderResult
-        //above event completed successfully, event success,
-        if (...){
+        persistOrder.state = OrderState.PROCESSING
 
-            val eventSuccess: Message<OrderEvents> = MessageBuilder.withPayload(OrderEvents.ON_SUCCESS).build()
-            result = OrderResult.SUCCESS
-        }  else {
-            val eventError: Message<OrderEvents> = MessageBuilder.withPayload(OrderEvents.ON_ERROR).build()
-            result = OrderResult.ERROR
-        }
+        repository.save(persistOrder)
 
-        stateMachine.sendEvent(Mono.just(event))
+        stateMachine.stop()
+        /*stateMachine.sendEvent(Mono.just(event))
             .publishOn(Schedulers.boundedElastic())
             .doOnComplete {
                 persistOrder.finishedAt = LocalDateTime.now()
@@ -51,7 +40,7 @@ class OrderServiceImpl(
                 persistOrder.result = result
                 repository.save(persistOrder)
             }
-            .subscribe()
+            .subscribe()*/
 
 
     }
