@@ -16,7 +16,7 @@ import java.util.*
 class PaymentStateChangeInterceptor(private val repository: PaymentRepository)
     : StateMachineInterceptorAdapter<PaymentState, PaymentEvent>() {
 
-    override fun preStateChange(
+    override fun postStateChange(
         state: State<PaymentState, PaymentEvent>?,
         message: Message<PaymentEvent>?,
         transition: Transition<PaymentState, PaymentEvent>?,
@@ -34,8 +34,9 @@ class PaymentStateChangeInterceptor(private val repository: PaymentRepository)
             val paymentId = it.headers[PaymentServiceImpl.PAYMENT_ID_HEADER] as? Long ?: -1L
 
             if (paymentId != -1L) {
+                println("Interceptor was called! Save the current state of id $paymentId state: ${state!!.id}")
                 val payment = repository.findById(paymentId).get()
-                payment.state = state!!.id
+                payment.state = state.id
                 repository.save(payment)
             }
 

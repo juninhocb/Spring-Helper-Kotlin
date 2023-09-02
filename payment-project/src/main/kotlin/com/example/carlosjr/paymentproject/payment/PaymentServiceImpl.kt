@@ -6,6 +6,7 @@ import org.springframework.statemachine.StateMachine
 import org.springframework.statemachine.config.StateMachineFactory
 import org.springframework.statemachine.support.DefaultStateMachineContext
 import org.springframework.stereotype.Service
+import kotlin.random.Random
 
 @Service
 class PaymentServiceImpl(private val repository: PaymentRepository,
@@ -20,6 +21,26 @@ class PaymentServiceImpl(private val repository: PaymentRepository,
     override fun newPayment(payment: Payment): Payment {
         payment.state = PaymentState.PRE_AUTH
         return repository.save(payment)
+    }
+
+    override fun processNewPayment(payment: Payment) {
+
+        //store first
+        payment.state = PaymentState.PRE_AUTH
+        val persisted = repository.save(payment)
+
+        val sm = preAuth(persisted.id!!)
+
+        if (sm.state.id.equals(PaymentState.AUTH)){
+
+            if (Random.nextInt(5) > 1){
+                authorizePayment(persisted.id)
+            } else {
+                declineAuth(persisted.id)
+            }
+
+        }
+
     }
 
     override fun preAuth(paymentId: Long): StateMachine<PaymentState, PaymentEvent> {

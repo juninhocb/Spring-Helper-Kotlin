@@ -21,12 +21,29 @@ class PaymentServiceImplTest(@Autowired private val service: PaymentService,
 
     @Test
     fun preAuth() {
-
         val savedPayment = service.newPayment(payment)
         val id = savedPayment.id!!
         val sm = service.preAuth(id)
         val preAuthedPayment = repository.findById(id)
         println(preAuthedPayment.get())
         println(sm.state)
+    }
+
+    @Test
+    fun authTest() {
+        val savedPayment = service.newPayment(payment)
+        val id = savedPayment.id!!
+        val sm = service.preAuth(id)
+        val preAuthedPayment = repository.findById(id)
+        println(preAuthedPayment.get())
+        println("PreAuth state result: ${sm.state}")
+
+        if (sm.state.id.equals(PaymentState.AUTH)){
+            val sm2 = service.authorizePayment(id)
+            val authPaymentResult = repository.findById(id)
+            println(authPaymentResult)
+            println("Auth state result ${sm2.state}")
+        }
+
     }
 }

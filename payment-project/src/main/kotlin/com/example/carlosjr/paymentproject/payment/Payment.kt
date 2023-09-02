@@ -16,7 +16,7 @@ data class Payment (
     val id: Long? = null,
 
     @Enumerated(EnumType.STRING)
-    var state: PaymentState,
+    var state: PaymentState? = PaymentState.PRE_AUTH,
 
     var amount: BigDecimal
 

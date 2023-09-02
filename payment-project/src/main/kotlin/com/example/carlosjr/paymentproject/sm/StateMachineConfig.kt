@@ -16,7 +16,8 @@ import java.util.*
 
 @Configuration
 @EnableStateMachineFactory
-class StateMachineConfig(private val actions: PaymentActions)
+class StateMachineConfig(private val actions: PaymentActions,
+                         private val guards: PaymentGuards)
     : StateMachineConfigurerAdapter<PaymentState, PaymentEvent>() {
 
     override fun configure(config: StateMachineConfigurationConfigurer<PaymentState, PaymentEvent>?) {
@@ -42,6 +43,7 @@ class StateMachineConfig(private val actions: PaymentActions)
             ?.target(PaymentState.PRE_AUTH)
             ?.event(PaymentEvent.PRE_AUTHORIZE)
             ?.action(actions.preAuthAction())
+            ?.guard(guards.paymentIdGuard())
                 ?.and()
                 ?.withExternal()
                 ?.source(PaymentState.PRE_AUTH)
