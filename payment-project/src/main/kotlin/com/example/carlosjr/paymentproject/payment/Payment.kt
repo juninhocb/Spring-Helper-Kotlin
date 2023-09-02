@@ -21,5 +21,5 @@ data class Payment (
     var amount: BigDecimal
 
 ){
-    constructor() : this(null, PaymentState.NEW, BigDecimal(0.0))
+    constructor() : this(null, PaymentState.PRE_AUTH, BigDecimal(0.0))
 }

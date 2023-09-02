@@ -24,9 +24,9 @@ class PaymentServiceImplTest(@Autowired private val service: PaymentService,
 
         val savedPayment = service.newPayment(payment)
         val id = savedPayment.id!!
-        service.preAuth(id)
+        val sm = service.preAuth(id)
         val preAuthedPayment = repository.findById(id)
         println(preAuthedPayment.get())
-
+        println(sm.state)
     }
 }

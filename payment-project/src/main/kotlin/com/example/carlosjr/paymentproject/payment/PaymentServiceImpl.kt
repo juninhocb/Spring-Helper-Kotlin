@@ -18,26 +18,26 @@ class PaymentServiceImpl(private val repository: PaymentRepository,
 
 
     override fun newPayment(payment: Payment): Payment {
-        payment.state = PaymentState.NEW
+        payment.state = PaymentState.PRE_AUTH
         return repository.save(payment)
     }
 
-    override fun preAuth(paymentId: Long): StateMachine<PaymentState, PaymentEvent>? {
+    override fun preAuth(paymentId: Long): StateMachine<PaymentState, PaymentEvent> {
         val sm = build(paymentId)
         sendEvent(paymentId, sm, PaymentEvent.PRE_AUTHORIZE)
-        return null
+        return sm
     }
 
     override fun authorizePayment(paymentId: Long): StateMachine<PaymentState, PaymentEvent> {
         val sm = build(paymentId)
         sendEvent(paymentId, sm, PaymentEvent.AUTH_APPROVED)
-        TODO("Not yet implemented")
+        return sm
     }
 
     override fun declineAuth(paymentId: Long): StateMachine<PaymentState, PaymentEvent> {
         val sm = build(paymentId)
         sendEvent(paymentId, sm, PaymentEvent.AUTH_DECLINED)
-        TODO("Not yet implemented")
+        return sm
     }
 
     private fun sendEvent(paymentId: Long,

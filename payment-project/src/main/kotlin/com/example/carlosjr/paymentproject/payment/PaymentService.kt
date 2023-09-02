@@ -6,7 +6,7 @@ interface PaymentService {
 
     fun newPayment(payment: Payment) : Payment
 
-    fun preAuth(paymentId: Long) : StateMachine<PaymentState, PaymentEvent>?
+    fun preAuth(paymentId: Long) : StateMachine<PaymentState, PaymentEvent>
 
     fun authorizePayment(paymentId: Long) : StateMachine<PaymentState, PaymentEvent>
 
