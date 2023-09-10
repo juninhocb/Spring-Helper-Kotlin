@@ -9,9 +9,12 @@ data class Team(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-    val name: String,
-    val titles: Int,
+    @Column(unique = true)
+    var name: String,
+    var titles: Int,
     @CreationTimestamp
     @Column(name = "created_time")
     val createdTime: LocalDateTime? = null
-)
+) {
+    constructor() : this(null, "", 0, null)
+}

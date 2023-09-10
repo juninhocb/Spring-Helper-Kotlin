@@ -8,11 +8,9 @@ import org.springframework.stereotype.Component
 @Component
 class InitData(private val repository: TeamRepository) : CommandLineRunner{
     override fun run(vararg args: String?) {
-        val t1= Team(null, "Palmeiras", 157, null)
-        val t2= Team(null, "São Paulo", 98, null)
-        val t3= Team(null, "Botafogo", 72, null)
+        val t1= Team(null, "Palmeiras", 157)
+        val t2= Team(null, "São Paulo", 98)
+        val t3= Team(null, "Botafogo", 72)
         repository.saveAll(listOf(t1,t2,t3))
     }
-
-
 }

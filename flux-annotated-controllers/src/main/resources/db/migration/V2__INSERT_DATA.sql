@@ -1,3 +1,3 @@
-insert into team (name,titles) values ("Palmeiras",157);
-insert into team (name,titles) values ("São Paulo",98);
-insert into team (name,titles) values ("Botafogo",72);
+insert into team (created_time, name,titles) values (NOW(),"Palmeiras",157);
+insert into team (created_time, name,titles) values (NOW(),"São Paulo",98);
+insert into team (created_time, name,titles) values (NOW(),"Botafogo",72);
