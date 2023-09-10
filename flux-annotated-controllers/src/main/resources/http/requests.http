@@ -1,0 +1,38 @@
+DELETE http://localhost:8080/api/v1/team/4
+
+###
+
+PUT http://localhost:8080/api/v1/team/4
+Content-Type: application/json
+
+{
+  "name" : "Fluminense",
+  "titles" :  75
+}
+
+###
+
+# curl -X POST --data {} http://localhost:8080/api/v1/team
+POST http://localhost:8080/api/v1/team
+Content-Type: application/json
+
+{
+   "name" : "Fluminense",
+   "titles" :  74
+}
+
+###
+
+# curl http://localhost:8080/api/v1/team
+GET http://localhost:8080/api/v1/team?page=0&size=3
+Accept: application/json
+###
+
+GET http://localhost:8080/api/v1/team/4
+Accept: application/json
+###
+
+
+
+
+
